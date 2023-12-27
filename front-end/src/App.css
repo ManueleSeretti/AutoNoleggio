@@ -39,3 +39,7 @@
 body {
   overflow-x: hidden; /* Nasconde la scrollbar orizzontale */
 }
+#formRow {
+  border: 5px solid orange;
+  background-color: lightgray;
+}

@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import backGround from "../assets/bg-autoNoleggio.png";
 import TopBar from "./TopBar";
 
-const { Container, Row, Col, Card } = require("react-bootstrap");
+const { Container, Row, Col, Card, Button } = require("react-bootstrap");
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <Container fluid className="p-0">
       <div
@@ -55,8 +57,11 @@ const Home = () => {
               </Card>
             </Col>
           </Row>
-          <Card body className="bg-dark text-warning">
-            Vedi subito le vetture disponibili
+          <Card body className="bg-dark text-warning text-center">
+            <Button variant="outline-warning" onClick={() => navigate("/all-cars")}>
+              {" "}
+              Vedi subito le vetture disponibili
+            </Button>
           </Card>
         </div>
       </div>
