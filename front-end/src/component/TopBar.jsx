@@ -6,6 +6,7 @@ import { useLocation, Link } from "react-router-dom";
 
 const TopBar = () => {
   const location = useLocation();
+
   return (
     <Navbar bg="dark" data-bs-theme="dark" className="mb-5">
       <Container fluid>

@@ -1,14 +1,26 @@
 import { Card, Col, Container, ListGroup, Row, Form } from "react-bootstrap";
 import TopBar from "./TopBar";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SingleCar from "./SingleCar";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchGetAllCars } from "../redux/actions";
 
 const AllCar = () => {
   const [info, setInfo] = useState({ dataStart: "", dataEnd: "" });
+  const carsList = useSelector((state) => state.data.cars);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchGetAllCars());
+  }, []);
+  useEffect(() => {
+    console.log(carsList);
+  }, [carsList]);
   const changeInfo = (nome, value) => {
     setInfo({ ...info, [nome]: value });
   };
+
   return (
     <Container fluid className="bg-dark ">
       <TopBar />
@@ -52,18 +64,12 @@ const AllCar = () => {
       <Row className="justify-content-center mb-5">
         <Col xs={10}>
           <ListGroup as="ul">
-            <ListGroup.Item className="mb-3" as="li">
-              <SingleCar />
-            </ListGroup.Item>
-            <ListGroup.Item className="mb-3" as="li">
-              <SingleCar />
-            </ListGroup.Item>
-            <ListGroup.Item className="mb-3" as="li">
-              <SingleCar />
-            </ListGroup.Item>
-            <ListGroup.Item className="mb-3" as="li">
-              <SingleCar />
-            </ListGroup.Item>
+            {carsList &&
+              carsList.map((cars) => (
+                <ListGroup.Item className="mb-3" as="li">
+                  <SingleCar info={cars} />
+                </ListGroup.Item>
+              ))}
           </ListGroup>
         </Col>
       </Row>

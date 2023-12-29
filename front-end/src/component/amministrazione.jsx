@@ -9,7 +9,7 @@ const Amministrazione = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchGetAllCars(token));
+    dispatch(fetchGetAllCars());
     dispatch(fetchGetAllRents(token));
   }, []);
   return;

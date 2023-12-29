@@ -1,60 +1,72 @@
 import { useState } from "react";
 import { Button, Col, Container, Form, Image, InputGroup, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getTokenAction, setProfilo } from "../redux/actions";
 import image from "../assets/rentSmall.png";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [info, setInfo] = useState({});
 
+  const token = useSelector((state) => state.login.token);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const baseEndpoint = "http://35.181.223.102/api/v1/";
+  const baseEndpoint = "http://localhost:3001/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setInfo({
+
+    await postLogin({
       email: username,
       password: password,
     });
 
-    await postLogin(info);
-
-    navigate("/all-cars");
+    // navigate("/all-cars");
   };
 
-  const postLogin = async (data) => {
+  const postLogin = async (info) => {
+    console.log(info);
     try {
-      const response = await fetch(baseEndpoint + "auth/login/", {
+      const response = await fetch(baseEndpoint + "auth/login", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
         },
+
         body: JSON.stringify(info),
       });
       if (response.ok) {
-        const data = await response.json();
+        const token = await response.json();
+        console.log(response);
 
-        dispatch(getTokenAction(data));
-        const resp2 = await fetch(baseEndpoint + "auth/users/profilo", {
-          method: "GET",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        if (response.ok) {
-          const data2 = await response.json();
-          await dispatch(setProfilo(data2));
-        }
+        dispatch(getTokenAction(token));
+      }
+    } catch (error) {
+      console.log(error);
+      console.log("porco dio");
+    }
+  };
+
+  const getProfile = async (info) => {
+    console.log(info);
+    try {
+      const resp = await fetch(baseEndpoint + "users/profilo", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        mode: "cors",
+      });
+      if (resp.ok) {
+        const profile = await resp.json();
+        await dispatch(setProfilo(profile));
       } else {
         alert("Error login");
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
+      console.log("porco dio");
     }
   };
 

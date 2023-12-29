@@ -1,7 +1,7 @@
 import { Button, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const SingleCar = () => {
+const SingleCar = ({ info }) => {
   const navigate = useNavigate();
   return (
     <Row>
@@ -13,15 +13,19 @@ const SingleCar = () => {
           <Row>
             <Col xs="3">
               <p>Modello</p>
+              <span>{info.model}</span>
             </Col>
             <Col xs="3">
               <p>categoria</p>
+              <span>{info.categoria}</span>
             </Col>
             <Col xs="3">
               <p>alimentazione</p>
+              <span>{info.alimentazione}</span>
             </Col>
             <Col xs="3">
-              <p>kilometraggio</p>
+              <p>Anno</p>
+              <span>{info.year}</span>
             </Col>
           </Row>
         </div>

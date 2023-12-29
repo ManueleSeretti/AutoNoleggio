@@ -6,14 +6,10 @@ export const getTokenAction = (token) => ({ type: "LOGIN", payload: token });
 export const logoutAction = () => ({ type: "LOGOUT", payload: "" });
 export const setProfilo = (data) => ({ type: SET_PROFILO, payload: data });
 
-export const fetchGetAllCars = (token) => {
+export const fetchGetAllCars = () => {
   return async (dispatch, getState) => {
     try {
-      const resp = await fetch("http://35.181.223.102/api/v1/cars", {
-        headers: {
-          Authorization: `Bearer ` + token,
-        },
-      });
+      const resp = await fetch("http://localhost:3001/auth/autos", {});
       const data = await resp.json();
       await dispatch({ type: SET_CARS, payload: data });
     } catch (error) {
@@ -24,7 +20,7 @@ export const fetchGetAllCars = (token) => {
 export const fetchGetAllRents = (token) => {
   return async (dispatch, getState) => {
     try {
-      const resp = await fetch("http://35.181.223.102/api/v1/rents", {
+      const resp = await fetch("http://localhost:3001/rents", {
         headers: {
           Authorization: `Bearer` + token,
         },
@@ -40,7 +36,7 @@ export const fetchGetAllRents = (token) => {
 export const fetchPostCars = (payload, token) => {
   return async (dispatch, getState) => {
     try {
-      const resp = await fetch("http://35.181.223.102/api/v1/cars", {
+      const resp = await fetch("http://localhost:3001/cars", {
         method: "POST",
         headers: {
           Authorization: `Bearer ` + token,
@@ -59,7 +55,7 @@ export const fetchPostCars = (payload, token) => {
 export const fetchPostRent = (payload, token) => {
   return async (dispatch, getState) => {
     try {
-      const resp = await fetch("http://35.181.223.102/api/v1/rents", {
+      const resp = await fetch("http://localhost:3001/rents", {
         method: "POST",
         headers: {
           Authorization: `Bearer ` + token,
@@ -78,7 +74,7 @@ export const fetchPostRent = (payload, token) => {
 export const fetchPutCars = (payload, token) => {
   return async (dispatch, getState) => {
     try {
-      const resp = await fetch("http://35.181.223.102/api/v1/cars", {
+      const resp = await fetch("http://localhost:3001/cars", {
         method: "PUT",
         headers: {
           Authorization: `Bearer ` + token,
@@ -97,7 +93,7 @@ export const fetchPutCars = (payload, token) => {
 export const fetchPutRent = (payload, token) => {
   return async (dispatch, getState) => {
     try {
-      const resp = await fetch("http://35.181.223.102/api/v1/rents", {
+      const resp = await fetch("http://localhost:3001/rents", {
         method: "PUT",
         headers: {
           Authorization: `Bearer ` + token,
